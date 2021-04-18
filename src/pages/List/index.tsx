@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router';
 import ContentHeader from '../../components/ContentHeader';
 import HistoryCard from '../../components/HistoryCard';
@@ -7,6 +7,7 @@ import { expenses } from '../../expenses';
 import { gains } from '../../gains';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
+import { MONTHS } from '../../utils/months';
 import { Container, Content, Filters } from './styles';
 
 const List: React.FC = () => {
@@ -47,19 +48,47 @@ const List: React.FC = () => {
     })
     setData(response)
   },[typeList, monthSelected, yearSelected])
-  const months = [
-    { value: 4, label: 'Abril'},
-    { value: 7, label: 'Julho'},
-    { value: 8, label: 'Agosto'},
-    { value: 9, label: 'Setembro'},
-  ];
 
-  const years = [
-    { value: 2021, label: 2021 },
-    { value: 2020, label: 2020 },
-    { value: 2019, label: 2019 },
-    { value: 2018, label: 2018 },
-  ];
+  const months = useMemo(() => {
+    const CurrentDate = new Date();
+    // Pegamos o ano inicial para conseguir saber se vamos renderizar todos os meses, ou somente os meses do ano atual.
+    const year = CurrentDate.getFullYear();
+    // Armazena o mês atual para saber até que mês deve ser ter select no caso de o user está vendo o ano atual.
+    const currentMonth = CurrentDate.getMonth() + 1;
+    // Cria um array para armazenar todos os meses
+    let monthsArray: { value?: string | number, label?: string | number }[] = [{}];
+    // Dropa o primeiro objeto do array que estava vazio
+    monthsArray.pop();
+    // Faz o testes para saber se só vai ser armazenado os meses do ano atual.
+      if (year === Number(yearSelected)) {
+        MONTHS.forEach((month, index) => {
+          if (index + 1 <= currentMonth) {
+            monthsArray.push({value: index + 1, label: month})
+          } 
+        })
+      } else {
+        MONTHS.forEach((month, index) => {
+          monthsArray.push({value: index + 1, label: month})
+        })
+      };
+      return monthsArray;
+    
+  },[yearSelected])
+
+  const years = useMemo(() => {
+    let uniqueYears: number[] = [];
+    typeList.forEach(({date}) => {
+      const formatedDate = new Date(date);
+      const year = formatedDate.getFullYear();
+      if (!uniqueYears.includes(year)) {
+        uniqueYears.push(year);
+      } 
+    });
+    return uniqueYears.map((year) => ({
+      value: year,
+      label: year,
+    }))
+  }, [typeList])
 
   return (
     <Container>
