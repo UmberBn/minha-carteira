@@ -28,6 +28,11 @@ export const Container = styled.li`
     justify-content: space-between;
     padding-left: 10px;
   }
+
+  > div span {
+    font-size: 20px;
+    font-weight: 500;
+  }
 `;
 
 export const Tag = styled.div<ITagProps>`
@@ -36,4 +41,5 @@ export const Tag = styled.div<ITagProps>`
   height: 60%;
   background-color: ${(props) => props.color };
   left: 0;
+  border-radius: 0 10px 10px 0;
 `;

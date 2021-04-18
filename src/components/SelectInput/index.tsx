@@ -12,8 +12,8 @@ const SelectInput: React.FC<ISelectInputProps> = ({options}) => {
     <Container>
       <select>
        {
-         options.map(({value, label}) => (
-           <option value={ value }>
+         options.map(({value, label}, index) => (
+           <option value={ value } key={ index }>
              { label }
            </option>
          ))

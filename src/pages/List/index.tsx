@@ -1,79 +1,91 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router';
 import ContentHeader from '../../components/ContentHeader';
 import HistoryCard from '../../components/HistoryCard';
 import SelectInput from '../../components/SelectInput';
-import { Container, Content } from './styles';
+import { expenses } from '../../expenses';
+import { gains } from '../../gains';
+import { formatCurrency } from '../../utils/formatCurrency';
+import { formatDate } from '../../utils/formatDate';
+import { Container, Content, Filters } from './styles';
 
 const List: React.FC = () => {
-  const options = [{
-    value: 'teste', label: 'teste',
+  
+  interface IData {
+    description: string;
+    amountFormatted: string;
+    frequency: string;
+    dataFormatted: string;
+  };
+  
+  interface ParamTypes {
+    type: string
+  };
+
+  const [data, setData] = useState<IData[]>([]);
+  const { type } = useParams<ParamTypes>();
+  const title: string = type === 'entry-balance' ? 'Entradas' : 'Saidas';
+  const lineColor: string = type === 'entry-balance' ? '#F7931B': '#E44C4E'
+  const typeList = type === 'entry-balance' ? gains : expenses;
+  useEffect(() => {
+    const response = typeList.map((item) => {
+      return {
+        description: item.description,
+        amountFormatted: formatCurrency(Number(item.amount)),
+        frequency: item.frequency,
+        dataFormatted: formatDate(item.date),
+      }
+    })
+    setData(response)
+  },[typeList])
+  const months = [{
+    value: 7, label: 'Julho',
   }, {
-    value: 'teste', label: 'teste',
+    value: 8, label: 'Agosto',
   }, {
-    value: 'teste', label: 'teste',
+    value: 9, label: 'Setembro',
   }];
+
+  const years = [{
+    value: 2020 , label: 2020,
+  }, {
+    value: 2019, label: 2019,
+  }, {
+    value: 2018, label: 2018,
+  }];
+
   return (
     <Container>
-      <ContentHeader title='Entradas' lineColor="#E44C4E">
-        <SelectInput options={ options }/>
-        <SelectInput options={ options }/>
-        <SelectInput options={ options }/>
+      <ContentHeader title={ title } lineColor={ lineColor }>
+        <SelectInput options={ months }/>
+        <SelectInput options={ years }/>
       </ContentHeader>
+      <Filters>
+        <button
+          type="button"
+          className="tag-filter recurrent"
+        >
+            Recorrentes
+        </button>
+        <button
+          type="button"
+          className="tag-filter eventual"
+        >
+            Eventuais
+        </button>
+      </Filters>
       <Content>
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
-        <HistoryCard
-          tagColor="#e44c4e"
-          title="Qualquer"
-          subtitle="27/07/2020"
-          amount="R$ 130"
-        />
+        { data.map(({ description, amountFormatted, frequency, dataFormatted }, index,
+        ) => {
+          return (
+            <HistoryCard
+              key={ index }
+              tagColor={ frequency === 'recorrente' ? '#E44C4E' : '#4E41F0' }
+              title={description}
+              subtitle={dataFormatted}
+              amount={amountFormatted}
+            />)
+        })}
       </Content>
     </Container>
   );
