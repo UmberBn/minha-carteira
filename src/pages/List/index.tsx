@@ -23,42 +23,57 @@ const List: React.FC = () => {
   };
 
   const [data, setData] = useState<IData[]>([]);
+  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
+  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
   const { type } = useParams<ParamTypes>();
   const title: string = type === 'entry-balance' ? 'Entradas' : 'Saidas';
   const lineColor: string = type === 'entry-balance' ? '#F7931B': '#E44C4E'
   const typeList = type === 'entry-balance' ? gains : expenses;
   useEffect(() => {
-    const response = typeList.map((item) => {
+    const filteredDate = typeList.filter(({ date }) => {
+      const formatedDate = new Date(date);
+      const month = String(formatedDate.getMonth() + 1 );
+      const year = String(formatedDate.getFullYear());
+
+      return month === monthSelected && year === yearSelected;
+    })
+    const response = filteredDate.map(({description, amount, frequency, date}) => {
       return {
-        description: item.description,
-        amountFormatted: formatCurrency(Number(item.amount)),
-        frequency: item.frequency,
-        dataFormatted: formatDate(item.date),
+        description: description,
+        amountFormatted: formatCurrency(Number(amount)),
+        frequency: frequency,
+        dataFormatted: formatDate(date),
       }
     })
     setData(response)
-  },[typeList])
-  const months = [{
-    value: 7, label: 'Julho',
-  }, {
-    value: 8, label: 'Agosto',
-  }, {
-    value: 9, label: 'Setembro',
-  }];
+  },[typeList, monthSelected, yearSelected])
+  const months = [
+    { value: 4, label: 'Abril'},
+    { value: 7, label: 'Julho'},
+    { value: 8, label: 'Agosto'},
+    { value: 9, label: 'Setembro'},
+  ];
 
-  const years = [{
-    value: 2020 , label: 2020,
-  }, {
-    value: 2019, label: 2019,
-  }, {
-    value: 2018, label: 2018,
-  }];
+  const years = [
+    { value: 2021, label: 2021 },
+    { value: 2020, label: 2020 },
+    { value: 2019, label: 2019 },
+    { value: 2018, label: 2018 },
+  ];
 
   return (
     <Container>
       <ContentHeader title={ title } lineColor={ lineColor }>
-        <SelectInput options={ months }/>
-        <SelectInput options={ years }/>
+        <SelectInput
+          options={ months }
+          onChange={(e) => setMonthSelected(e.target.value)}
+          defaultValue={ monthSelected }  
+        />
+        <SelectInput
+          options={ years }
+          onChange={(e) => setYearSelected(e.target.value)}
+          defaultValue={ yearSelected }
+        />  
       </ContentHeader>
       <Filters>
         <button
