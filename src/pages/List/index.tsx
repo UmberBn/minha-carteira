@@ -26,17 +26,19 @@ const List: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
   const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
   const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
+  const [filterByButton, setFilterByButton] = useState<string[]>(['recorrente', 'eventual'])
   const { type } = useParams<ParamTypes>();
   const title: string = type === 'entry-balance' ? 'Entradas' : 'Saidas';
   const lineColor: string = type === 'entry-balance' ? '#F7931B': '#E44C4E'
   const typeList = type === 'entry-balance' ? gains : expenses;
+
   useEffect(() => {
-    const filteredDate = typeList.filter(({ date }) => {
+    const filteredDate = typeList.filter(({ date, frequency }) => {
       const formatedDate = new Date(date);
       const month = String(formatedDate.getMonth() + 1 );
       const year = String(formatedDate.getFullYear());
 
-      return month === monthSelected && year === yearSelected;
+      return month === monthSelected && year === yearSelected && filterByButton.includes(frequency);
     })
     const response = filteredDate.map(({description, amount, frequency, date}) => {
       return {
@@ -47,7 +49,7 @@ const List: React.FC = () => {
       }
     })
     setData(response)
-  },[typeList, monthSelected, yearSelected])
+  },[typeList, monthSelected, yearSelected, filterByButton])
 
   const months = useMemo(() => {
     const CurrentDate = new Date();
@@ -90,6 +92,15 @@ const List: React.FC = () => {
     }))
   }, [typeList])
 
+  const handleClick = (filterType: string) => {
+    if (filterByButton.includes(filterType) && filterByButton.length !== 1) {
+      const filtered = filterByButton.filter((item) => item !== filterType)
+      setFilterByButton(filtered)
+    } else if(!filterByButton.includes(filterType)) {
+      setFilterByButton((prev) => [...prev, filterType]);
+    }
+  };
+
   return (
     <Container>
       <ContentHeader title={ title } lineColor={ lineColor }>
@@ -107,13 +118,15 @@ const List: React.FC = () => {
       <Filters>
         <button
           type="button"
-          className="tag-filter recurrent"
+          className={`tag-filter recurrent ${filterByButton.includes('recorrente') && 'tag-actived'}`}
+          onClick={ () => handleClick('recorrente')}
         >
             Recorrentes
         </button>
         <button
           type="button"
-          className="tag-filter eventual"
+          className={`tag-filter eventual ${filterByButton.includes('eventual') && 'tag-actived'}`}
+          onClick={ () => handleClick('eventual')}
         >
             Eventuais
         </button>

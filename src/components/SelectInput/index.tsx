@@ -21,7 +21,6 @@ const SelectInput: React.FC<ISelectInputProps> = ({options, onChange, defaultVal
          ))
        }
       </select>
-      {console.log(defaultValue)}
     </Container>
   );
 }
