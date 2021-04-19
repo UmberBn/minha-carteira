@@ -5,17 +5,17 @@ interface ITagProps {
 }
 
 export const Container = styled.li`
+  align-items: center;
   background-color: ${ (props) => props.theme.colors.tertiary };
-  list-style: none;
   border-radius: 5px;
-  margin: 10px 0;
-  padding: 12px 10px;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  transition: all .3s;
+  list-style: none;
+  margin: 10px 0;
+  padding: 12px 10px;
   position: relative;
+  transition: all .3s;
 
   &:hover {
     opacity: .7;
@@ -36,10 +36,10 @@ export const Container = styled.li`
 `;
 
 export const Tag = styled.div<ITagProps>`
+  background-color: ${(props) => props.color };
+  border-radius: 0 10px 10px 0;
+  height: 60%;
+  left: 0;
   position: absolute;
   width: 10px;
-  height: 60%;
-  background-color: ${(props) => props.color };
-  left: 0;
-  border-radius: 0 10px 10px 0;
 `;

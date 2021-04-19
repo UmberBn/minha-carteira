@@ -18,8 +18,8 @@ export const Title = styled.h3`
   margin-left: 10px;
 `;
 export const Logo = styled.img`
-  width: 40px;
   height: 40px;
+  width: 40px;
 `;
 export const MenuContainer = styled.nav`
   display: flex;
@@ -27,9 +27,9 @@ export const MenuContainer = styled.nav`
   margin-top: 50px;
 `;
 export const MenuItemLink = styled.a`
+  align-items: center;
   color: ${ (props) => props.theme.colors.info };
   display: flex;
-  align-items: center;
   margin: 7px 0;
   text-decoration: none;
   transition: opacity 0.3s;
