@@ -16,7 +16,7 @@ const List: React.FC = () => {
     description: string;
     amountFormatted: string;
     frequency: string;
-    dataFormatted: string;
+    dateFormatted: string;
   };
   
   interface ParamTypes {
@@ -26,10 +26,10 @@ const List: React.FC = () => {
   const [data, setData] = useState<IData[]>([]);
   const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
   const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
-  const [filterByButton, setFilterByButton] = useState<string[]>(['recorrente', 'eventual'])
+  const [filterByButton, setFilterByButton] = useState<string[]>(['recorrente', 'eventual']);
   const { type } = useParams<ParamTypes>();
   const title: string = type === 'entry-balance' ? 'Entradas' : 'Saidas';
-  const lineColor: string = type === 'entry-balance' ? '#F7931B': '#E44C4E'
+  const lineColor: string = type === 'entry-balance' ? '#F7931B': '#E44C4E';
   const typeList = type === 'entry-balance' ? gains : expenses;
 
   useEffect(() => {
@@ -39,17 +39,17 @@ const List: React.FC = () => {
       const year = String(formatedDate.getFullYear());
 
       return month === monthSelected && year === yearSelected && filterByButton.includes(frequency);
-    })
+    });
     const response = filteredDate.map(({description, amount, frequency, date}) => {
       return {
         description: description,
         amountFormatted: formatCurrency(Number(amount)),
         frequency: frequency,
-        dataFormatted: formatDate(date),
+        dateFormatted: formatDate(date),
       }
-    })
+    });
     setData(response)
-  },[typeList, monthSelected, yearSelected, filterByButton])
+  },[typeList, monthSelected, yearSelected, filterByButton]);
 
   const months = useMemo(() => {
     const CurrentDate = new Date();
@@ -67,7 +67,7 @@ const List: React.FC = () => {
           if (index + 1 <= currentMonth) {
             monthsArray.push({value: index + 1, label: month})
           } 
-        })
+        });
       } else {
         MONTHS.forEach((month, index) => {
           monthsArray.push({value: index + 1, label: month})
@@ -75,7 +75,7 @@ const List: React.FC = () => {
       };
       return monthsArray;
     
-  },[yearSelected])
+  },[yearSelected]);
 
   const years = useMemo(() => {
     let uniqueYears: number[] = [];
@@ -84,21 +84,21 @@ const List: React.FC = () => {
       const year = formatedDate.getFullYear();
       if (!uniqueYears.includes(year)) {
         uniqueYears.push(year);
-      } 
+      }; 
     });
     return uniqueYears.map((year) => ({
       value: year,
       label: year,
-    }))
-  }, [typeList])
+    }));
+  }, [typeList]);
 
   const handleClick = (filterType: string) => {
     if (filterByButton.includes(filterType) && filterByButton.length !== 1) {
-      const filtered = filterByButton.filter((item) => item !== filterType)
-      setFilterByButton(filtered)
+      const filtered = filterByButton.filter((item) => item !== filterType);
+      setFilterByButton(filtered);
     } else if(!filterByButton.includes(filterType)) {
       setFilterByButton((prev) => [...prev, filterType]);
-    }
+    };
   };
 
   return (
@@ -132,14 +132,14 @@ const List: React.FC = () => {
         </button>
       </Filters>
       <Content>
-        { data.map(({ description, amountFormatted, frequency, dataFormatted }, index,
+        { data.map(({ description, amountFormatted, frequency, dateFormatted }, index,
         ) => {
           return (
             <HistoryCard
               key={ index }
               tagColor={ frequency === 'recorrente' ? '#E44C4E' : '#4E41F0' }
               title={description}
-              subtitle={dataFormatted}
+              subtitle={dateFormatted}
               amount={amountFormatted}
             />)
         })}
