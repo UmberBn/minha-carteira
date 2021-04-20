@@ -25,7 +25,7 @@ const WalletBox: React.FC<IWalletBoxProps> = ({
     } else {
       return arrowDown
     };
-  }, [])
+  }, [icon])
   
   return (
     <Container color={ color }>

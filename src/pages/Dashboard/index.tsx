@@ -74,6 +74,20 @@ const Dashboard: React.FC = () => {
           icon="dolar"
           color="#4E41F0"
         />
+        <WalletBox
+          title='Entradas'
+          amount={5000}
+          footerLabel='última movimentação em 18/07/2020 às 11h40'
+          icon="arrowUp"
+          color="#F7931B"
+        />
+        <WalletBox
+          title='Saídas'
+          amount={4850}
+          footerLabel='última movimentação em 18/07/2020 às 11h40'
+          icon="arrowDown"
+          color="#E44C4E"
+        />
       </Content>
     </Container>
   );
