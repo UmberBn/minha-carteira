@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import ContentHeader from '../../components/ContentHeader';
+import MessageBox from '../../components/MessageBox';
 import SelectInput from '../../components/SelectInput';
 import WalletBox from '../../components/WalletBox';
 import { expenses } from '../../expenses';
@@ -8,8 +9,8 @@ import { MONTHS } from '../../utils/months';
 import { Container, Content } from './styles';
 
 const Dashboard: React.FC = () => {
-  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
-  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
+  const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
+  const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
   
   const months = useMemo(() => {
     const CurrentDate = new Date();
@@ -52,42 +53,71 @@ const Dashboard: React.FC = () => {
     }));
   }, []);
 
+  const totalGains = useMemo(()=> {
+    let total: number = 0;
+    gains.forEach((gain) => {
+      const date = new Date(gain.date);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+        if (month === monthSelected && year === yearSelected) {
+          total += Number(gain.amount);
+       };
+    });
+    return total;
+  },[monthSelected, yearSelected])
+
+  const totalExpenses = useMemo(()=> {
+    let total: number = 0;
+    expenses.forEach((expense) => {
+      const date = new Date(expense.date);
+      const year = date.getFullYear();
+      const month = date.getMonth() + 1;
+        if (month === monthSelected && year === yearSelected) {
+          total += Number(expense.amount);
+       };
+    });
+    return total;
+  },[monthSelected, yearSelected])
+
+  const totalAmount = totalGains - totalExpenses;
+  
   return (
     <Container>
       <ContentHeader title='Dasboard' lineColor='#F7931B'>
       <SelectInput
           options={ months }
-          onChange={(e) => setMonthSelected(e.target.value)}
+          onChange={(e) => setMonthSelected(Number(e.target.value))}
           defaultValue={ monthSelected }  
         />
         <SelectInput
           options={ years }
-          onChange={(e) => setYearSelected(e.target.value)}
+          onChange={(e) => setYearSelected(Number(e.target.value))}
           defaultValue={ yearSelected }
         />  
       </ContentHeader>
       <Content>
         <WalletBox
           title='Saldo'
-          amount={150}
+          amount={totalAmount}
           footerLabel='atualizado com base nas entradas e saídas'
           icon="dolar"
           color="#4E41F0"
         />
         <WalletBox
           title='Entradas'
-          amount={5000}
+          amount={totalGains}
           footerLabel='última movimentação em 18/07/2020 às 11h40'
           icon="arrowUp"
           color="#F7931B"
         />
         <WalletBox
           title='Saídas'
-          amount={4850}
+          amount={totalExpenses}
           footerLabel='última movimentação em 18/07/2020 às 11h40'
           icon="arrowDown"
           color="#E44C4E"
         />
+        <MessageBox totalAmount={totalAmount} />
       </Content>
     </Container>
   );
