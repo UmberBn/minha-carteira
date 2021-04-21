@@ -9,6 +9,7 @@ export const Container = styled.div`
   flex-direction: column;
   height: 260px;
   justify-content: space-between;
+  margin: 10px 0;
   padding: 30px;
   width: 48%;
 
