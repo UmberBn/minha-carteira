@@ -2,7 +2,8 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import Routes from './Routes';
 import GlobalStyles from './styles/GlobalStyles';
-import { useTheme } from './context/ThemeContext'
+import { useTheme } from './context/ThemeContext';
+import 'antd/dist/antd.css';
 
 const App: React.FC = () => {
   const { currentTheme } = useTheme();
