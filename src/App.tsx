@@ -2,8 +2,7 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import Routes from './Routes';
 import GlobalStyles from './styles/GlobalStyles';
-import { useTheme } from './context/ThemeContext';
-import 'antd/dist/antd.css';
+import { useTheme } from './context';
 
 const App: React.FC = () => {
   const { currentTheme } = useTheme();
@@ -11,7 +10,7 @@ const App: React.FC = () => {
     <ThemeProvider theme={ currentTheme }>
       <GlobalStyles />
       <Routes />
-    </ ThemeProvider>
+    </ThemeProvider>
   );
 }
 

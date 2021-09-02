@@ -27,7 +27,7 @@ interface ITheme {
   
 }
 
-const Provider: React.FC = ({children}) => {
+const ThemeProvider: React.FC = ({children}) => {
   const [currentTheme, setCurrentTheme] = useState<ITheme>(() => {
     const savedTheme = getLocalStorage('@my-wallet:Theme')
     return savedTheme || dark
@@ -60,4 +60,4 @@ function useTheme(): IThemeContext {
   return context
 }
 
-export {Provider, useTheme};
+export {ThemeProvider, useTheme};

@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App'
-import { Provider } from './context/ThemeContext'
+import { ThemeProvider, AuthProvider } from './context'
 
 ReactDOM.render(
   <React.StrictMode>
-      <Provider>
-        <App />
-      </Provider>
+      <ThemeProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

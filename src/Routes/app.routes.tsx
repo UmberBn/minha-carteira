@@ -7,8 +7,9 @@ import List from '../pages/List';
 const AppRoutes: React.FC = () => (
   <Layout>
     <Switch>
-      <Route exact path="/dashboard" component={ Dashboard }/>
       <Route exact path="/list/:type" component={ List }/>
+      <Route exact path="/dashboard" component={ Dashboard }/>
+      <Route path="/" component={ Dashboard }/>
     </Switch>
   </Layout>
 );

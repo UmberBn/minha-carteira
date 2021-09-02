@@ -7,3 +7,7 @@ export function setLocalStorage(key, value) {
   const stringfyValue = JSON.stringify(value)
   localStorage.setItem(key, stringfyValue)
 }
+
+export function removeLocalStorage(key) {
+  localStorage.removeItem(key)
+}
