@@ -13,6 +13,10 @@ export const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   border-radius: 7px;
   display: flex;
+
+  @media(max-width: 540px) {
+    width: 100%;
+  }
 `;
 
 export const SideLeft = styled.aside`
@@ -59,12 +63,12 @@ export const Legend = styled.li<ILegendProps>`
   
   > div {
     background-color: ${(props) => props.color};
-    border-radius: 5px;
-    font-size: 14px;
-    height: 40px;
-    line-height: 40px;
+    border-radius: 7px;
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
-    width: 40px;
+    width: 50px;
   }
 
   > span {

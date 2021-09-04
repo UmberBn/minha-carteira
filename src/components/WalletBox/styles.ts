@@ -33,4 +33,8 @@ export const Container = styled.div<IContainerProps>`
     font-size: 12px;
     position: absolute;
   }
+
+  @media(max-width: 720px){
+    width: 100%;
+  }
 `;

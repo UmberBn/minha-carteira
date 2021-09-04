@@ -21,4 +21,10 @@ export const Container = styled.div`
   > header p {
     font-size: 18px;
   }
+
+  @media(max-width: 768px){
+    width: 100%;
+    text-align: center;
+    height: auto;
+  }
 `;

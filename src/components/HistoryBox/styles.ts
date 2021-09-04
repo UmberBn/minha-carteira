@@ -29,6 +29,15 @@ export const Header = styled.div`
     margin-bottom: 20px;
     padding-left: 16px;
   }
+
+  @media(max-width: 768px) {
+    justify-content: space-around;
+    align-items: center;
+    > h2 {
+      margin-bottom: 0px;
+      padding-left: 0px;
+  }
+  }
 `;
 
 export const LegendContainer = styled.div`
@@ -45,12 +54,12 @@ export const Legend = styled.li<ILegendProps> `
   
   > div {
     background-color: ${(props) => props.color};
-    border-radius: 5px;
-    font-size: 14px;
-    height: 40px;
-    line-height: 40px;
+    border-radius: 7px;
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
-    width: 40px;
+    width: 50px;
   }
 
   > span {
