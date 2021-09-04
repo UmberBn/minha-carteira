@@ -34,7 +34,7 @@ const PieChartBox: React.FC<IPieChartBoxProps> = ({ data }) => (
         </LegendContainer>
       </SideLeft>
       <SideRight>
-        <ResponsiveContainer width={500}>
+        <ResponsiveContainer>
           <PieChart>
             <Pie
               data={data}

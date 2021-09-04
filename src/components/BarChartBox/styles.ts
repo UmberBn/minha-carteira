@@ -14,7 +14,7 @@ export const Container = styled.div`
   border-radius: 7px;
   display: flex;
 
-  @media(max-width: 540px) {
+  @media(max-width: 640px) {
     width: 100%;
   }
 `;

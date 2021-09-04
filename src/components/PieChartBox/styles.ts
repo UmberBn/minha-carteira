@@ -63,7 +63,6 @@ export const LegendContainer = styled.ul`
   @media(max-width: 640px){
     height: auto;
     display: flex;
-    overflow-x: scroll;
     justify-content: space-around;
     padding-right: 0px;
   }
@@ -92,6 +91,12 @@ export const Legend = styled.li<ILegendProps>`
 export const SideRight = styled.main`
   display: flex;
   flex: 1;
-  height: 100%;
   justify-content: center;
+
+  @media(max-width: 640px){
+    display: block;
+    margin: 0 auto;
+    height: 250px;
+    width: 250px;
+  }
 `;
