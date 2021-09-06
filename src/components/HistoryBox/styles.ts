@@ -14,6 +14,11 @@ export const Container = styled.div`
   margin: 10px 0;
   padding: 7px;
   border-radius: 7px;
+
+  @media(max-width: 300px){
+    width: 90%;
+    height: auto;
+  }
 `;
 export const ChartContainer = styled.div`
   flex: 1;
@@ -54,6 +59,10 @@ export const LegendContainer = styled.div`
   display: flex;
   justify-content: space-around;
   width: 100%;
+
+  @media(max-width: 300px) {
+    display: block;
+  }
 `;
 
 export const Legend = styled.li<ILegendProps> `

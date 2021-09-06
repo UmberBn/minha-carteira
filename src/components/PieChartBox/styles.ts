@@ -21,6 +21,12 @@ export const Container = styled.div`
     flex-direction: column;
     height: auto;
   }
+
+  @media(max-width: 300px){
+    width: 90%;
+    flex-direction: column;
+    height: auto;
+  }
 `;
 
 export const SideLeft = styled.aside`
@@ -66,6 +72,10 @@ export const LegendContainer = styled.ul`
     justify-content: space-around;
     padding-right: 0px;
   }
+
+  @media(max-width: 300px){
+    display: block;
+  }
 `;
 
 export const Legend = styled.li<ILegendProps>`
@@ -98,5 +108,10 @@ export const SideRight = styled.main`
     margin: 0 auto;
     height: 250px;
     width: 250px;
+  }
+
+  @media(max-width: 300px){
+    height: 200px;
+    width: 200px;
   }
 `;

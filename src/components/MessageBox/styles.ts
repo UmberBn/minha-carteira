@@ -27,4 +27,11 @@ export const Container = styled.div`
     text-align: center;
     height: auto;
   }
+
+  @media(max-width: 300px){
+    width: 90%;
+    text-align: center;
+    height: auto;
+  }
+  
 `;

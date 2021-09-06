@@ -37,4 +37,19 @@ export const Container = styled.div<IContainerProps>`
   @media(max-width: 720px){
     width: 100%;
   }
+
+  @media(max-width: 300px){
+    width: 90%;
+
+    > span {
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+    > small {
+    bottom: 10px;
+    font-size: 14px;
+    position: absolute;
+  }
+  }
 `;
