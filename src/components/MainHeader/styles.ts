@@ -9,6 +9,7 @@ export const Container = styled.div`
   grid-area: MH;
   justify-content: space-between;
   padding: 0 10px;
+
 `;
 
 export const Profile = styled.div`

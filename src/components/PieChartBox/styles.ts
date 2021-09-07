@@ -22,8 +22,7 @@ export const Container = styled.div`
     height: auto;
   }
 
-  @media(max-width: 300px){
-    width: 90%;
+  @media(max-width: 375px){
     flex-direction: column;
     height: auto;
   }
@@ -73,7 +72,7 @@ export const LegendContainer = styled.ul`
     padding-right: 0px;
   }
 
-  @media(max-width: 300px){
+  @media(max-width: 375px){
     display: block;
   }
 `;
@@ -110,7 +109,7 @@ export const SideRight = styled.main`
     width: 250px;
   }
 
-  @media(max-width: 300px){
+  @media(max-width: 375px){
     height: 200px;
     width: 200px;
   }

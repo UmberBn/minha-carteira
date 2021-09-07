@@ -6,6 +6,7 @@ export const Container = styled.div`
   border-radius: 7px;
   color:  ${(props) => props.theme.colors.white};
   display: flex;
+  text-align: center;
   flex-direction: column;
   height: 260px;
   justify-content: space-between;
@@ -28,10 +29,4 @@ export const Container = styled.div`
     height: auto;
   }
 
-  @media(max-width: 300px){
-    width: 90%;
-    text-align: center;
-    height: auto;
-  }
-  
 `;

@@ -20,4 +20,4 @@ export const Container = styled.div`
   ::-webkit-scrollbar-track {
     background-color: ${(props) => props.theme.colors.tertiary};
   }
-`;
+`

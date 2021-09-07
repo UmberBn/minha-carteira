@@ -38,9 +38,8 @@ export const Container = styled.div<IContainerProps>`
     width: 100%;
   }
 
-  @media(max-width: 300px){
-    width: 90%;
-
+  @media(max-width: 375px){
+    
     > span {
     font-size: 20px;
     font-weight: 500;

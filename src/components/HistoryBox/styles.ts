@@ -13,11 +13,11 @@ export const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   margin: 10px 0;
   padding: 7px;
+  padding-top: 30px;
   border-radius: 7px;
 
-  @media(max-width: 300px){
-    width: 90%;
-    height: auto;
+  @media(max-width: 375px){
+    min-height: 500px;
   }
 `;
 export const ChartContainer = styled.div`
@@ -60,8 +60,9 @@ export const LegendContainer = styled.div`
   justify-content: space-around;
   width: 100%;
 
-  @media(max-width: 300px) {
+  @media(max-width: 375px) {
     display: block;
+    padding: 20px 6px;
   }
 `;
 
