@@ -23,6 +23,10 @@ export const Container = styled.div<IContainerProps>`
     height: 110%;
   }
 
+  > h1 {
+    color: ${(props) => props.theme.colors.white};
+  }
+  
   > span {
     font-size: 18px;
     font-weight: 500;

@@ -16,10 +16,11 @@ export const Container = styled.div`
   padding-top: 30px;
   border-radius: 7px;
 
-  @media(max-width: 375px){
+  @media(max-width: 600px){
     min-height: 500px;
   }
 `;
+
 export const ChartContainer = styled.div`
   flex: 1;
   height: 260px;

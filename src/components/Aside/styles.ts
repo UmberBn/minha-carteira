@@ -1,17 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-export const Container = styled.div`
+interface IOpenSidebar {
+  isOpen: boolean;
+}
+
+export const Container= styled.div<IOpenSidebar> `
   background-color: ${ (props) => props.theme.colors.secondary };
   border-right: 1px solid ${ (props) => props.theme.colors.gray };
   color: ${ (props) => props.theme.colors.white };
   grid-area: AS;
   padding-left: 20px;
+
+  @media(max-width: 768px){
+    ${props => props.isOpen && css`
+      display: 'flex';
+      flex-direction: column;
+      position: absolute;
+      z-index: 200;
+      width: 50vw;
+      height: 100vh;
+      left: 0;
+    } 
+  `}
+  }
+  
+  
 `;
 
 export const Header = styled.header`
   align-items: center;
-  display: flex;
+  display: flex; 
   height: 70px;
+
+  > .hamburger-react {
+    margin-left: 50px;
+  }
 `;
 export const Title = styled.h3`
   display: flex;
@@ -60,4 +83,5 @@ export const MenuItemButton = styled.button`
     font-size: 18px;
     margin-right: 5px;
   }
+
 `;
