@@ -6,13 +6,16 @@ export const Container = styled.div`
   border-radius: 7px;
   color:  ${(props) => props.theme.colors.white};
   display: flex;
+  text-align: center;
   flex-direction: column;
   height: 260px;
   justify-content: space-between;
   margin: 10px 0;
   padding: 30px;
   width: 48%;
-
+  > header h1 {
+    ${(props) => props.theme.colors.white}
+  }
   > header img {
     width: 35px;
     margin-left: 7px;
@@ -21,4 +24,11 @@ export const Container = styled.div`
   > header p {
     font-size: 18px;
   }
+
+  @media(max-width: 768px){
+    width: 100%;
+    text-align: center;
+    height: auto;
+  }
+
 `;

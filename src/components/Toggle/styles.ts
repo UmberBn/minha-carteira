@@ -9,7 +9,7 @@ export const ToggleLabel = styled.span`
 `;
 export const ToggleSelector = styled(Switch).attrs<ReactSwitchProps>(
   ({ theme }) => ({
-    offColor: theme.colors.warning,
+    offColor: theme.colors.info,
     onColor: theme.colors.info,
   })
 )<ReactSwitchProps>`

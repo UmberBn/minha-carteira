@@ -1,30 +1,43 @@
 import React from 'react';
-import { useAuth } from '../../context';
+import { useAuth, useSidebar } from '../../context';
 import {
   MdDashboard,
   MdArrowDownward,
   MdArrowUpward,
   MdExitToApp,
-} from 'react-icons/md'
+} from 'react-icons/md';
 import {
+  CloseButton,
   Container,
   Header,
   Logo,
   MenuContainer,
   MenuItemButton,
   MenuItemLink,
-  Title
+  Title,
+  ToggleContainer
 } from './styles';
 import LogoSVG from '../../assets/logo.svg';
+import {Spin as Hamburger} from 'hamburger-react'
+import useWindowSize from '../../hooks/useWindowSize';
+import Toggle from '../Toggle';
 
 const Aside: React.FC = () => {
-  const { signOut } = useAuth()
+  const { signOut } = useAuth();
+  const {isOpen, changeIsOpen} = useSidebar();
+  const windowSize = useWindowSize()
   return (
-    <Container>
+    <Container isOpen={isOpen}>
+      {windowSize.width <= 768 && <CloseButton>
+         <Hamburger toggle={changeIsOpen} toggled={isOpen}/>
+      </CloseButton>}
       <Header>
         <Logo src={ LogoSVG } alt="Logo minha carteira" />
         <Title> Minha Carteira </Title>
       </Header>
+      {windowSize.width <= 768 && <ToggleContainer>
+         <Toggle />
+      </ToggleContainer>}
       <MenuContainer>
         <MenuItemLink href="/dashboard">
           <MdDashboard />
@@ -43,6 +56,7 @@ const Aside: React.FC = () => {
           Sair
         </MenuItemButton>
       </MenuContainer>
+      
     </Container>
   );
 }

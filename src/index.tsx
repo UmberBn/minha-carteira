@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App'
-import { ThemeProvider, AuthProvider } from './context'
+import { ThemeProvider, AuthProvider, SideBarProvider } from './context'
 
 ReactDOM.render(
   <React.StrictMode>
+     <SideBarProvider>
       <ThemeProvider>
         <AuthProvider>
-          <App />
+            <App />
         </AuthProvider>
       </ThemeProvider>
+      </SideBarProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

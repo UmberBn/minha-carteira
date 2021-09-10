@@ -13,6 +13,14 @@ export const Container = styled.div`
   color: ${(props) => props.theme.colors.white};
   border-radius: 7px;
   display: flex;
+
+  @media(max-width: 640px) {
+    width: 100%;
+  }
+
+  @media(max-width: 375px) {
+    flex-direction: column;
+  }
 `;
 
 export const SideLeft = styled.aside`
@@ -22,14 +30,29 @@ export const SideLeft = styled.aside`
     padding-left: 16px;
     margin-bottom: 10px;
   }
+
+  @media(max-width: 375px) {
+    padding-bottom: 0;
+    flex:auto;
+
+    > h2 {
+    padding-left: 0;
+    text-align: center;
+    margin-bottom: 15px;
+    }
+  }
 `;
 
 export const SideRight = styled.main`
   flex: 1;
-  min-height:150px;
+  min-height: 150px;
   display: flex;
   justify-content: center;
   padding-top: 35px;
+
+  @media(max-width: 375px) {
+    padding-top: 0;
+  }
 `;
 
 export const LegendContainer = styled.ul`
@@ -59,15 +82,20 @@ export const Legend = styled.li<ILegendProps>`
   
   > div {
     background-color: ${(props) => props.color};
-    border-radius: 5px;
-    font-size: 14px;
-    height: 40px;
-    line-height: 40px;
+    border-radius: 7px;
+    font-size: 16px;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
-    width: 40px;
+    width: 50px;
   }
 
   > span {
     margin-left: 5px;
+  }
+
+  @media(max-width: 375px) {
+    padding-left: 0px;
+    height: auto;
   }
 `;

@@ -30,7 +30,7 @@ export const Filters = styled.div`
   }
 
   .recurrent::after {
-      border-bottom: 10px solid ${(props) => props.theme.colors.warning};
+      border-bottom: 10px solid #E44C4E;
       content: '';
       display: block;
       margin: 0 auto;
@@ -38,7 +38,7 @@ export const Filters = styled.div`
     }
 
   .eventual::after {
-      border-bottom: 10px solid ${(props) => props.theme.colors.success};
+      border-bottom: 10px solid #4E41F0;
       content: '';
       display: block;
       margin: 0 auto;
