@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 interface IOpenSidebar {
@@ -72,7 +73,7 @@ export const MenuContainer = styled.nav`
   flex-direction: column;
   margin-top: 20px;
 `;
-export const MenuItemLink = styled.a`
+export const MenuItemLink = styled(Link)`
   align-items: center;
   color: ${ (props) => props.theme.colors.info };
   display: flex;

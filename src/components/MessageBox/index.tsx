@@ -27,7 +27,7 @@ const MessageBox: React.FC<IMessageBoxProps> = ({totalAmount}) => {
     title: 'Opa, parece que você que não estamos bem',
     icon: sad,
     description: 'Sua carteira está com o saldo negativo!',
-    footerText: 'tente cortar gastos desnecessários.'
+    footerText: 'Tente cortar gastos desnecessários.'
   }
 
   const zeroMessage: IMessages = {

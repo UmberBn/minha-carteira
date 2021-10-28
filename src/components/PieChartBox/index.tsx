@@ -45,7 +45,6 @@ const PieChartBox: React.FC<IPieChartBoxProps> = ({ data }) => (
                   <Cell key={name} fill={color} />
                 ))
               }
-              { console.log(data)}
             </Pie>
           </PieChart>
         </ResponsiveContainer>

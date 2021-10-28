@@ -14,7 +14,8 @@ export const Container = styled.div`
   padding: 30px;
   width: 48%;
   > header h1 {
-    ${(props) => props.theme.colors.white}
+    font-size: 1.6em;
+    color: ${(props) => props.theme.colors.white};
   }
   > header img {
     width: 35px;

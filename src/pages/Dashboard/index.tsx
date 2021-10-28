@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import ContentHeader from '../../components/ContentHeader';
 import HistoryBox from '../../components/HistoryBox';
 import MessageBox from '../../components/MessageBox';
@@ -8,56 +8,22 @@ import WalletBox from '../../components/WalletBox';
 import BarChartBox from '../../components/BarChartBox';
 import { expenses } from '../../expenses';
 import { gains } from '../../gains';
-import { MONTHS } from '../../utils/months';
 import { Container, Content } from './styles';
+import { useSelectedDate } from '../../context/SelectDateContext'
 
 const Dashboard: React.FC = () => {
-  const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
-  const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
-  
-  const months = useMemo(() => {
-    const CurrentDate = new Date();
-    // Pegamos o ano inicial para conseguir saber se vamos renderizar todos os meses, ou somente os meses do ano atual.
-    const year = CurrentDate.getFullYear();
-    // Armazena o mês atual para saber até que mês deve ser ter select no caso de o user está vendo o ano atual.
-    const currentMonth = CurrentDate.getMonth() + 1;
-    // Cria um array para armazenar todos os meses
-    let monthsArray: { value: string | number, label: string | number }[] = [{value: 0, label: 0}];
-    // Dropa o primeiro objeto do array que estava vazio
-    monthsArray.pop();
-    // Faz o testes para saber se só vai ser armazenado os meses do ano atual.
-      if (year === Number(yearSelected)) {
-        MONTHS.forEach((month, index) => {
-          if (index + 1 <= currentMonth) {
-            monthsArray.push({value: index + 1, label: month})
-          } 
-        });
-      } else {
-        MONTHS.forEach((month, index) => {
-          monthsArray.push({value: index + 1, label: month})
-        })
-      };
-      return monthsArray;
-    
-  },[yearSelected]);
-
-  const years = useMemo(() => {
-    let uniqueYears: number[] = [];
-    [...gains, ...expenses].forEach(({date}) => {
-      const formatedDate = new Date(date);
-      const year = formatedDate.getFullYear();
-      if (!uniqueYears.includes(year)) {
-        uniqueYears.push(year);
-      }; 
-    });
-    return uniqueYears.map((year) => ({
-      value: year,
-      label: year,
-    }));
-  }, []);
+  const {
+    monthSelected,
+    yearSelected,
+    months,
+    years,
+    setMonthSelected,
+    setYearSelected
+  } = useSelectedDate();
 
   const totalGains = useMemo(()=> {
     let total: number = 0;
+    
     gains.forEach((gain) => {
       const date = new Date(gain.date);
       const year = date.getFullYear();
@@ -222,7 +188,6 @@ const Dashboard: React.FC = () => {
     gains.forEach((gain) => {
       const date = new Date(gain.date);
       const year = date.getFullYear();
-      console.log(year, yearSelected);
       if(yearSelected === year) {
         totalGains += Number(gain.amount);
       };
@@ -240,7 +205,6 @@ const Dashboard: React.FC = () => {
     const total = totalExpenses + totalGains;
     const percentGains = Number(((totalGains / total) * 100).toFixed(1))
     const percentExpenses = Number(((totalExpenses / total) * 100).toFixed(1))
-    console.log(total)
     return {
       percentGains,
       percentExpenses,

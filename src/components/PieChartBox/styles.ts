@@ -105,12 +105,12 @@ export const SideRight = styled.main`
   @media(max-width: 640px){
     display: block;
     margin: 0 auto;
-    height: 250px;
-    width: 250px;
+    min-height: 250px;
+    min-width: 250px;
   }
 
   @media(max-width: 375px){
-    height: 200px;
-    width: 200px;
+    min-height: 200px;
+    min-width: 200px;
   }
 `;

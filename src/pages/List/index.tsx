@@ -1,17 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 import ContentHeader from '../../components/ContentHeader';
 import HistoryCard from '../../components/HistoryCard';
 import SelectInput from '../../components/SelectInput';
+import { useSelectedDate } from '../../context';
 import { expenses } from '../../expenses';
 import { gains } from '../../gains';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { formatDate } from '../../utils/formatDate';
-import { MONTHS } from '../../utils/months';
 import { Container, Content, Filters } from './styles';
 
 const List: React.FC = () => {
-  
+  const {
+    monthSelected,
+    yearSelected,
+    months,
+    years,
+    setMonthSelected,
+    setYearSelected
+  } = useSelectedDate();
   interface IData {
     description: string;
     amountFormatted: string;
@@ -24,8 +31,6 @@ const List: React.FC = () => {
   };
 
   const [data, setData] = useState<IData[]>([]);
-  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1));
-  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()));
   const [filterByButton, setFilterByButton] = useState<string[]>(['recorrente', 'eventual']);
   const { type } = useParams<ParamTypes>();
   const title: string = type === 'entry-balance' ? 'Entradas' : 'Saidas';
@@ -35,8 +40,8 @@ const List: React.FC = () => {
   useEffect(() => {
     const filteredDate = typeList.filter(({ date, frequency }) => {
       const formatedDate = new Date(date);
-      const month = String(formatedDate.getMonth() + 1 );
-      const year = String(formatedDate.getFullYear());
+      const month = Number(formatedDate.getMonth() + 1 );
+      const year = Number(formatedDate.getFullYear());
 
       return month === monthSelected && year === yearSelected && filterByButton.includes(frequency);
     });
@@ -50,47 +55,6 @@ const List: React.FC = () => {
     });
     setData(response)
   },[typeList, monthSelected, yearSelected, filterByButton]);
-
-  const months = useMemo(() => {
-    const CurrentDate = new Date();
-    // Pegamos o ano inicial para conseguir saber se vamos renderizar todos os meses, ou somente os meses do ano atual.
-    const year = CurrentDate.getFullYear();
-    // Armazena o mês atual para saber até que mês deve ser ter select no caso de o user está vendo o ano atual.
-    const currentMonth = CurrentDate.getMonth() + 1;
-    // Cria um array para armazenar todos os meses
-    let monthsArray: { value?: string | number, label?: string | number }[] = [{}];
-    // Dropa o primeiro objeto do array que estava vazio
-    monthsArray.pop();
-    // Faz o testes para saber se só vai ser armazenado os meses do ano atual.
-      if (year === Number(yearSelected)) {
-        MONTHS.forEach((month, index) => {
-          if (index + 1 <= currentMonth) {
-            monthsArray.push({value: index + 1, label: month})
-          } 
-        });
-      } else {
-        MONTHS.forEach((month, index) => {
-          monthsArray.push({value: index + 1, label: month})
-        })
-      };
-      return monthsArray;
-    
-  },[yearSelected]);
-
-  const years = useMemo(() => {
-    let uniqueYears: number[] = [];
-    typeList.forEach(({date}) => {
-      const formatedDate = new Date(date);
-      const year = formatedDate.getFullYear();
-      if (!uniqueYears.includes(year)) {
-        uniqueYears.push(year);
-      }; 
-    });
-    return uniqueYears.map((year) => ({
-      value: year,
-      label: year,
-    }));
-  }, [typeList]);
 
   const handleClick = (filterType: string) => {
     if (filterByButton.includes(filterType) && filterByButton.length !== 1) {
@@ -106,12 +70,12 @@ const List: React.FC = () => {
       <ContentHeader title={ title } lineColor={ lineColor }>
         <SelectInput
           options={ months }
-          onChange={(e) => setMonthSelected(e.target.value)}
+          onChange={(e) => setMonthSelected(Number(e.target.value))}
           defaultValue={ monthSelected }  
         />
         <SelectInput
           options={ years }
-          onChange={(e) => setYearSelected(e.target.value)}
+          onChange={(e) => setYearSelected(Number(e.target.value))}
           defaultValue={ yearSelected }
         />  
       </ContentHeader>

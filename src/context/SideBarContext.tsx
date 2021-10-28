@@ -10,7 +10,7 @@ interface ISideBar {
 }
 
 const SideBarProvider: React.FC = ({children}) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const changeIsOpen = () => setIsOpen(!isOpen);
 
   const data = {

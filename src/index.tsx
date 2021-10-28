@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App'
-import { ThemeProvider, AuthProvider, SideBarProvider } from './context'
+import {
+  ThemeProvider,
+  AuthProvider,
+  SideBarProvider,
+  SelectdDateProvider
+} from './context'
 
 ReactDOM.render(
   <React.StrictMode>
      <SideBarProvider>
       <ThemeProvider>
-        <AuthProvider>
-            <App />
-        </AuthProvider>
+        <SelectdDateProvider>
+          <AuthProvider>
+              <App />
+          </AuthProvider>
+        </SelectdDateProvider>
       </ThemeProvider>
       </SideBarProvider>
   </React.StrictMode>,

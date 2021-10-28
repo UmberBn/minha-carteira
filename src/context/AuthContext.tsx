@@ -1,5 +1,6 @@
 import { notification } from 'antd';
 import React, {createContext, useContext, useState} from 'react'
+import { useHistory } from 'react-router';
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from '../helpers/localStorage';
 
 interface IAuthContext {
@@ -17,6 +18,8 @@ const AuthProvider: React.FC = ({ children }) => {
     return !!isLogged
   })
 
+  const history = useHistory();
+
   const signIn = (email: string, password: string) => {
     if(email === "humberto@minhacarteira.com" && password==="123"){
       setLocalStorage('@minha-carteira:logged', true)
@@ -32,6 +35,7 @@ const AuthProvider: React.FC = ({ children }) => {
   const signOut = () => {
     removeLocalStorage('@minha-carteira:logged')
     setLogged(false)
+    if(history?.push) history.push('/')
   }
 
   return (
