@@ -10,6 +10,7 @@ import { expenses } from '../../expenses';
 import { gains } from '../../gains';
 import { Container, Content } from './styles';
 import { useSelectedDate } from '../../context/SelectDateContext'
+import moment from 'moment';
 
 const Dashboard: React.FC = () => {
   const {
@@ -211,6 +212,15 @@ const Dashboard: React.FC = () => {
     };
   }, [yearSelected]);
 
+  const lastUpdates = useMemo(() => {
+    const sortedGains = gains.sort((a, b) => moment(a.date, 'YYYY-MM-DD').diff(moment(b.date, 'YYYY-MM-DD')));
+    const sortedExpenses = expenses.sort((a, b) => moment(a.date, 'YYYY-MM-DD').diff(moment(b.date, 'YYYY-MM-DD')));
+
+    return {
+      lastGain: moment(sortedGains[sortedGains.length-1].date).format("DD/MM/YYYY"),
+      lastExpense: moment(sortedExpenses[sortedExpenses.length-1].date).format("DD/MM/YYYY"),
+    }
+  }, [])
   return (
     <Container>
       <ContentHeader title='Dasboard' lineColor='#F7931B'>
@@ -236,14 +246,14 @@ const Dashboard: React.FC = () => {
         <WalletBox
           title='Entradas'
           amount={totalGains}
-          footerLabel='última movimentação em 18/07/2020 às 11h40'
+          footerLabel={`última movimentação em ${lastUpdates.lastGain}`}
           icon="arrowUp"
           color="#F7931B"
         />
         <WalletBox
           title='Saídas'
           amount={totalExpenses}
-          footerLabel='última movimentação em 18/07/2020 às 11h40'
+          footerLabel={`última movimentação em ${lastUpdates.lastExpense}`}
           icon="arrowDown"
           color="#E44C4E"
         />
